@@ -1,0 +1,103 @@
+#make.contigs(ffastq=Run3_16S_R1.fastq, rfastq=Run3_16S_R2.fastq, findex=Run3_16S_I1.fastq, oligos=Run3_16S_oligos.txt)
+
+summary.seqs(fasta=Run3_16S_R1.trim.contigs.fasta) 
+
+#This is where you will pull the samples you wish to analyze from the larger group of files. In the groups argument, list all the samples you would like to analyze, including a – in between each sample name. 
+
+get.groups(fasta=Run3_16S_R1.trim.contigs.fasta, group=Run3_16S_R1.contigs.groups, groups=NDS_GN1001-NDS_GN1002-NDS_GN1003-NDS_GN1004-NDS_GN1005-NDS_GN1006-NDS_GN1007-NDS_GN1008-NDS_GN1009-NDS_GN1010-NDS_GN1011-NDS_GN1012-NDS_GN1019-NDS_GN1020-NDS_GN1021-NDS_GN1022-NDS_GN1023-NDS_GN1024-NDS_GN1025-NDS_GN1026-NDS_GN1027-NDS_GN1028-NDS_GN1029-NDS_GN1030-NDS_GN1031-NDS_GN1032-NDS_GN1033-NDS_GN1034-NDS_GN1035-NDS_GN1036-NDS_GN1037-NDS_GN1038-NDS_GN1039-NDS_GN1040-NDS_GN1041-NDS_GN1042-NDS_GN1043-NDS_GN1044-NDS_GN1045-NDS_GN1046-NDS_GN1047-NDS_GN1048-NDS_GN1056-NDS_GN1057-NDS_GN1058-NDS_GN1059-NDS_GN1060-NDS_GN1061-NDS_GN1062-NDS_GN1063-NDS_GN1064-NDS_GN1065-NDS_GN1066-NDS_GN1067-NDS_GN1068-NDS_GN1069-NDS_GN1070-NDS_GN1071-NDS_GN1072-NDS_GN1073-NDS_GN1074-NDS_GN1075-NDS_GN1076-NDS_GN1077-NDS_GN1078-NDS_GN1079-NDS_GN1086-NDS_GN1087-NDS_GN1088-NDS_GN1089-NDS_GN1090-NDS_GN1091-NDS_GN1092-NDS_GN1093-NDS_GN1094-NDS_GN1095-NDS_GN1096-NDS_GN1097-NDS_GN1098-NDS_GN1099-NDS_GN1100-NDS_GN1101-NDS_GN1102-NDS_GN1103-NDS_GN1104-NDS_GN1105-NDS_GN1106-NDS_GN1107-NDS_GN1108-NDS_GN1109-NDS_GN1110-NDS_GN1111-NDS_GN1112-NDS_GN1116-NDS_GN1117-NDS_GN1118-NDS_GN1122-NDS_GN1123-NDS_GN1124-NDS_GN1125-NDS_GN1126-NDS_GN1127-NDS_GN1128-NDS_GN1129-NDS_GN1130-NDS_GN1131-NDS_GN1132-NDS_GN1133-NDS_GN1134-NDS_GN1135-NDS_GN1136-NDS_GN1137-NDS_GN1138-NDS_GN1139-NDS_GN1140-NDS_GN1141-NDS_GN1142-NDS_GN1143-NDS_GN1144-NDS_GN1145-NDS_GN1146-NDS_GN1147-NDS_GN1148-NDS_GN1149-NDS_GN1150-NDS_GN1151-NDS_GN1152-NDS_GN1153-NDS_GN1154-NDS_GN1155-NDS_GN1156-NDS_GN1157-NDS_GN1158-NDS_GN1159-NDS_GN1160-NDS_GN1161-NDS_GN1162-NDS_GN1163-NDS_GN1164-NDS_GN1165-NDS_GN1166-NDS_GN1167-NDS_GN1168-NDS_GN1169-NDS_GN1173-NDS_GN1174-NDS_GN1175-NDS_GN1176-NDS_GN1177-NDS_GN1178-NDS_GN1185-NDS_GN1186-NDS_GN1187)
+
+screen.seqs(fasta=Run3_16S_R1.trim.contigs.pick.fasta, group=Run3_16S_R1.contigs.pick.groups, maxambig=0, maxlength=260)
+
+unique.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.fasta)
+
+count.seqs(name=Run3_16S_R1.trim.contigs.pick.good.names, group=Run3_16S_R1.contigs.pick.good.groups)
+
+summary.seqs(count=Run3_16S_R1.trim.contigs.pick.good.count_table)
+
+pcr.seqs(fasta=silva.nr_v123.align, start=11894, end=25319, keepdots=F)
+
+summary.seqs(fasta=silva.nr_v123.pcr.align)
+
+align.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.fasta, reference=silva.nr_v123.pcr.align)
+
+summary.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.align, count=Run3_16S_R1.trim.contigs.pick.good.count_table)
+
+#the follow command will implement start and end options that need to be specified before running. Take a look at the results from summary.seqs() and pick you start and end values. Example Start at or before position 1968 and end at or after position 11550. 
+
+screen.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.align, count=Run3_16S_R1.trim.contigs.pick.good.count_table, summary=Run3_16S_R1.trim.contigs.pick.good.unique.summary, start=1968, end=11550, maxhomop=8)
+
+summary.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.align, count=Run3_16S_R1.trim.contigs.pick.good.good.count_table)
+
+filter.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.align, vertical=T, trump=.)
+
+unique.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.fasta, count=Run3_16S_R1.trim.contigs.pick.good.good.count_table)
+
+pre.cluster(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.count_table, diffs=2)
+
+chimera.uchime(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.count_table, dereplicate=t)
+
+remove.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.fasta, accnos=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.accnos)
+
+summary.seqs(fasta=current, count=current)
+
+classify.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table, reference= silva.nr_v123.pcr.align, taxonomy=silva.nr_v123.tax, cutoff=80)
+
+#This next command is optional. It is in place to remove “undesirable” sequences. It will remove sequence from groups specified in the taxon option. 
+
+remove.lineage(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.taxonomy, taxon=Chloroplast-Mitochondria-unknown-Eukaryota)
+
+#This next command is used to pull the positive control samples out for error analysis. List your mock community samples in the groups argument. 
+
+get.groups(count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table, fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.fasta, groups=NDS_GN1185-NDS_GN1186-NDS_GN1187)
+
+seq.error(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, reference=HMP_MOCK.v35.align, aligned=F)
+
+dist.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, cutoff=0.20)
+
+cluster(column=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.dist, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table)
+
+make.shared(list=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, label=0.03)
+
+rarefaction.single(shared=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.summary Run3_16S_R1.mock.error.summary)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq Run3_16S_R1.mock.error.seq)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.chimera Run3_16S_R1.mock.error.chimera)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq.forward Run3_16S_R1.mock.error.seq.forward)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.seq.reverse Run3_16S_R1.mock.error.seq.reverse)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.count Run3_16S_R1.mock.error.count) 
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.matrix Run3_16S_R1.mock.error.matrix)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.error.ref Run3_16S_R1.mock.error.ref)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.dist Run3_16S_R1.mock.dist)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list Run3_16S_R1.mock.list)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared Run3_16S_R1.mock.shared)
+
+system (rename Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.groups.rarefaction Run3_16S_R1.mock.rarefaction)
+
+### This step is removing the mock communities/controls that were sequenced on each run. Make sure you change the “groups=Mock” to the actual names of the controls sequenced with your samples. Examples: “groups=SED_GN1090-SED_GN1091-SED_GN1092”
+
+remove.groups(count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table, fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.fasta, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.pick.taxonomy, groups=NDS_GN1185-NDS_GN1186-NDS_GN1187)
+
+dist.seqs(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, cutoff=0.20)
+
+cluster.split(fasta=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.fasta, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.pick.pick.taxonomy, splitmethod=classify, taxlevel=4, cutoff=0.15)
+
+make.shared(list=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, label=0.03)
+
+classify.otu(list=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.list, count=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.pick.count_table, taxonomy=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.nr_v123.wang.pick.pick.taxonomy, label=0.03)
+
+count.groups(shared=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared)
+
+#After count groups you will find the smallest number of sequences per sample. Use that in the size argument. This will rarefy the data. 
+
+sub.sample(shared=Run3_16S_R1.trim.contigs.pick.good.unique.good.filter.unique.precluster.pick.pick.pick.an.unique_list.shared)
