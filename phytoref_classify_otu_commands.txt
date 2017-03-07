@@ -1,0 +1,3 @@
+classify.seqs(fasta=WED1_2.final.fasta, template=PhytoRef.fasta, group=WED1_2.final.groups, taxonomy=PhytoRef.tax)
+
+classify.otu(list=WED1_2.final.an.list, name=WED1_2.final.names, group=WED1_2.final.groups, taxonomy=WED1_2.final.PhytoRef.wang.taxonomy, label=0.03)
